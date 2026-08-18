@@ -1,13 +1,15 @@
-import { PlaceholderPage } from "@/components/placeholder-page";
+import type { Metadata } from "next";
+import { AppShell } from "@/components/layout/app-shell";
+import { ResourcesView } from "@/components/resources/resources-view";
 
-export const metadata = { title: "Resources" };
+export const metadata: Metadata = {
+  title: "Resources & Advisors",
+};
 
 export default function ResourcesPage() {
   return (
-    <PlaceholderPage
-      title="Resource Hub & Directory"
-      description="Programs, scholarships, guides, and human advisors land in Phase 6."
-      phase="Coming in Phase 6"
-    />
+    <AppShell>
+      <ResourcesView />
+    </AppShell>
   );
 }
