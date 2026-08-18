@@ -1,13 +1,15 @@
-import { PlaceholderPage } from "@/components/placeholder-page";
+import type { Metadata } from "next";
+import { AppShell } from "@/components/layout/app-shell";
+import { EssayListView } from "@/components/essays/essay-list-view";
 
-export const metadata = { title: "Essays" };
+export const metadata: Metadata = {
+  title: "Essay Coach",
+};
 
 export default function EssaysPage() {
   return (
-    <PlaceholderPage
-      title="Essay Coach & Prompt Analyzer"
-      description="Prompt analysis, brainstorming, outlines, and rubric feedback land in Phase 5."
-      phase="Coming in Phase 5"
-    />
+    <AppShell>
+      <EssayListView />
+    </AppShell>
   );
 }
