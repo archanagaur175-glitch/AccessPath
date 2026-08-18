@@ -1,0 +1,55 @@
+name: Deploy (Vercel)
+
+# The deploy trigger is intentionally the LAST action of a build cycle.
+# Pushing a tag like `accesspath-v1.0.0` (or triggering this workflow manually)
+# deploys to Vercel. Works on every push to `main` runs CI only — nothing here
+# fires until the whole codebase is on the branch.
+on:
+  push:
+    tags: ["accesspath-v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build and deploy to Vercel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Vercel
+        if: ${{ vars.VERCEL_TOKEN != '' }}
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: "--prod"
+
+      - name: Notice when no Vercel secrets are configured
+        if: ${{ vars.VERCEL_TOKEN == '' }}
+        run: |
+          echo "::notice::No VERCEL_TOKEN configured — skipping automated deploy."
+          echo "Import this repository on vercel.com (one click) to publish."
+          echo "See README.md → Deployment for instructions."
