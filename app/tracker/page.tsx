@@ -1,13 +1,15 @@
-import { PlaceholderPage } from "@/components/placeholder-page";
+import type { Metadata } from "next";
+import { AppShell } from "@/components/layout/app-shell";
+import { KanbanBoard } from "@/components/tracker/kanban-board";
 
-export const metadata = { title: "Tracker" };
+export const metadata: Metadata = {
+  title: "Application Tracker",
+};
 
 export default function TrackerPage() {
   return (
-    <PlaceholderPage
-      title="Application Milestone Tracker"
-      description="The Kanban board with deadlines and checklists lands in Phase 4."
-      phase="Coming in Phase 4"
-    />
+    <AppShell>
+      <KanbanBoard />
+    </AppShell>
   );
 }
