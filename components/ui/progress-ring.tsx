@@ -42,8 +42,8 @@ export function ProgressRing({
     color ??
     (safe >= 75
       ? DEFAULT_COLORS[0]
-      : safe >= 45
-        ? DEFAULT_COLORS[3]
+      : safe >= 50
+        ? DEFAULT_COLORS[1]
         : safe >= 35
           ? DEFAULT_COLORS[2]
           : DEFAULT_COLORS[3]);

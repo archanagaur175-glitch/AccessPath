@@ -1,13 +1,15 @@
-import { PlaceholderPage } from "@/components/placeholder-page";
+import type { Metadata } from "next";
+import { AppShell } from "@/components/layout/app-shell";
+import { MatcherView } from "@/components/matcher/matcher-view";
 
-export const metadata = { title: "Matcher" };
+export const metadata: Metadata = {
+  title: "College Matcher",
+};
 
 export default function MatcherPage() {
   return (
-    <PlaceholderPage
-      title="College Matcher Engine"
-      description="The explainable Admission Strength Index and match grid land in Phase 3."
-      phase="Coming in Phase 3"
-    />
+    <AppShell>
+      <MatcherView />
+    </AppShell>
   );
 }
