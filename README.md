@@ -41,6 +41,20 @@ Try the seeded demo accounts at `/login` (any password of 4+ characters):
 
 You can also create a fresh account at `/signup` with a Student/Advisor role.
 
+### What's seeded in the demo
+
+The demo student (Avery Chen) comes with a full portfolio so every feature is live
+out of the box:
+
+| Dataset      | Count | Notes                                                     |
+| ------------ | ----- | --------------------------------------------------------- |
+| Colleges     | 48    | Real schools with admit rates, avg GPA/test scores, tags  |
+| Applications | 11    | Deadlines spread over Aug 2026–Jan 2027 (red/amber/green) |
+| Essays       | 5     | With version history + a rubric-scored draft              |
+| Resources    | 12    | Programs, scholarships, guides                            |
+| Advisors     | 6     | With focus areas, ratings, and a request flow             |
+| Roster       | 6     | Additional students for the advisor view                  |
+
 ## Tech stack
 
 - **Framework:** Next.js 16 (App Router, React Server Components), TypeScript (strict)
@@ -62,20 +76,21 @@ app/
   profile/           → profile builder / onboarding
   matcher/           → College Matcher Engine
   tracker/           → Kanban Milestone Tracker
-  essays/            → Essay Coach & [essayId] detail
+  essays/            → Essay Coach & [essayId] detail (SSG via generateStaticParams)
   resources/         → Resource Hub & Directory
   advisor/           → Advisor-only view
   api/               → route handlers (Supabase + mock)
 components/
   ui/                → shared design-system primitives
-  matcher/ tracker/ essays/ resources/ layout/
+  layout/            → shell, sidebar, theme toggle, user menu
+  matcher/ tracker/ essays/ resources/ advisor/ profile/
 lib/
   supabase/          → client.ts, server.ts, types.ts
   data/              → typed data-access layer (Supabase → mock fallback)
-  mock-data/         → colleges, students, essays, resources
+  mock-data/         → colleges, students, applications, essays, resources, advisors
   matching/          → scoring-engine.ts (Admission Strength Index)
+  essay-coach/       → prompt-analyzer, outline-generator, rubric-engine (offline)
   auth/              → session context + mock auth
-types/               → shared types
 proxy.ts             → Next.js 16 session refresh
 ```
 
@@ -86,12 +101,12 @@ npm install
 npm run dev        # http://localhost:3000
 ```
 
-Verification commands (all must pass):
+Verification commands (all must pass — the CI workflow enforces them):
 
 ```bash
 npm run lint        # ESLint
-npx tsc --noEmit    # TypeScript
-npm run build       # Production build
+npm run typecheck   # TypeScript (strict)
+npm run build       # Production build (Turbopack)
 ```
 
 ## Connecting Supabase (optional)

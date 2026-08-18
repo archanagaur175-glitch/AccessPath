@@ -16,6 +16,7 @@ interface KanbanColumnProps {
   })[];
   isDropTarget: boolean;
   onDropOnColumn: (status: ApplicationStatus) => void;
+  onHover: (status: ApplicationStatus | null) => void;
   onOpen: (app: Application) => void;
   onMove: (app: Application, direction: "left" | "right") => void;
   onDragStart: (app: Application) => void;
@@ -31,6 +32,7 @@ export function KanbanColumn({
   apps,
   isDropTarget,
   onDropOnColumn,
+  onHover,
   onOpen,
   onMove,
   onDragStart,
@@ -41,9 +43,12 @@ export function KanbanColumn({
       onDragOver={(event) => {
         event.preventDefault();
         event.dataTransfer.dropEffect = "move";
+        onHover(status);
       }}
+      onDragLeave={() => onHover(null)}
       onDrop={(event) => {
         event.preventDefault();
+        onHover(null);
         onDropOnColumn(status);
       }}
       aria-label={`${label} column`}

@@ -168,6 +168,7 @@ export function KanbanBoard() {
                   void moveStatus(dragged, to);
                 }
               }}
+              onHover={setDropColumn}
               onOpen={(app) => {
                 const enriched = apps.find((a) => a.id === app.id);
                 if (enriched) setPopover(enriched);
