@@ -13,6 +13,7 @@ import {
   getClientStudentProfile,
   saveClientStudentProfile,
 } from "@/lib/data/profiles-client";
+import { emptyStudentProfile } from "@/lib/mock-data/profile-storage";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -155,7 +156,7 @@ export function ProfileBuilder() {
         if (!userId) return;
         const existing = await getClientStudentProfile(userId);
         if (!cancelled) {
-          setProfile(existing);
+          setProfile(existing ?? emptyStudentProfile(userId));
           setError(null);
         }
       } catch {

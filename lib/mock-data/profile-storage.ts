@@ -47,3 +47,22 @@ export function hasPersistedMockProfile(userId: string): boolean {
     return false;
   }
 }
+
+/** Blank template for a student who has not built a profile yet. */
+export function emptyStudentProfile(userId: string): StudentProfile {
+  const now = new Date().toISOString();
+  return {
+    id: `profile-${Date.now()}`,
+    user_id: userId,
+    gpa: 0,
+    test_scores: [],
+    coursework: [],
+    extracurriculars: [],
+    interests: [],
+    intended_majors: [],
+    budget_range: { min: 0, max: 0 },
+    needs_financial_aid: false,
+    created_at: now,
+    updated_at: now,
+  };
+}
