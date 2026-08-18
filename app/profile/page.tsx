@@ -1,13 +1,15 @@
-import { PlaceholderPage } from "@/components/placeholder-page";
+import type { Metadata } from "next";
+import { AppShell } from "@/components/layout/app-shell";
+import { ProfileBuilder } from "@/components/profile/profile-builder";
 
-export const metadata = { title: "Profile" };
+export const metadata: Metadata = {
+  title: "My Profile",
+};
 
 export default function ProfilePage() {
   return (
-    <PlaceholderPage
-      title="Profile Builder"
-      description="The onboarding flow for GPA, test scores, rigor, and activities lands in Phase 2."
-      phase="Coming in Phase 2"
-    />
+    <AppShell>
+      <ProfileBuilder />
+    </AppShell>
   );
 }
